@@ -1,0 +1,23 @@
+{
+  "name": "settings-manager",
+  "version": "1.0.0",
+  "homepage": "https://github.com/BrianAdams/openrov-cockpit",
+  "authors": [
+    "brian@openrov.com"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "json-editor": "https://github.com/BrianAdams/json-editor.git#patched"
+  },
+  "resolutions": {
+    "webcomponentsjs": "^0.6.0"
+  }
+}

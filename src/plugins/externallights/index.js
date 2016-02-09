@@ -15,13 +15,16 @@
       adjustLights(value);
     });
 
+    deps.cockpit.on('plugin.externalLights.set', function (value) {
+      setLights(value);
+    });
     // Arduino
     deps.rov.on('status', function (data) {
       if ('LIGPE' in data) {
         //value of 0-1.0 representing percent
         var level = data.LIGPE;
         self.lights = level;
-        deps.cockpit.emit('plugin.externalLights.level', level);
+        deps.cockpit.emit('plugin.externalLights.state', {level:level});
       }
     });
 
@@ -61,6 +64,8 @@
 
 
   }
-  
-  module.exports = ExternalLights;
+  module.exports = function (name, deps) {
+    return new ExternalLights(name,deps);
+  };
+
 })();

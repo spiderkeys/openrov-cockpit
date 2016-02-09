@@ -14,14 +14,15 @@ var FirmwareInstallerPath = './lib/FirmwareInstaller';
 var HardwarePath = './lib/Hardware';
 var argv = require('optimist').argv;
 
+nconf.argv().env('__'); //Also look for overrides in environment settings
 // Will essentially rewrite the file when a change to the defaults are made if there is a parsing error.
 try {
-  nconf.use('file', { file: './etc/rovconfig.json' });
+  nconf.use('file', { file: (nconf.get('configfile') ? nconf.get('configfile') : '/etc/rovconfig.json') });
 } catch (err) {
   console.log('Unable to load the configuration file, resetting to defaults');
   console.log(err);
 }
-
+console.dir(nconf.get());
 nconf.env(); //Also look for overrides in environment settings
 
 // Do not change these values in this file for an individual ROV, use the ./etc/rovconfig.json instead
@@ -43,7 +44,7 @@ nconf.defaults({
   'production' : true,
   'sample_freq': 20,
   'dead_zone':  10,
-  'video_frame_rate': 10,
+  'video_frame_rate': 30,
   'video_resolution': 'SXGA',
   'video_device': '/dev/video0',
   'video_port': 8090,
