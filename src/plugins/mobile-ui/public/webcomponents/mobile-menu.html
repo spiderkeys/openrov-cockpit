@@ -3,7 +3,7 @@
 <link rel="import" href="../iron-icons/image-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 
-<link rel="import" href="../navigation-data/topdowncompass.html">
+<link rel="import" href="mobile-compass.html">
 
 <dom-module id="mobile-menu">
 	
@@ -78,7 +78,7 @@
 	<template>
 		<div id="container">
 			<iron-icon id="menu" icon="image:dehaze" on-tap="_onTapMenu"></iron-icon>
-			<orov-topdowncompass id="compass" event-emitter="{{eventEmitter}}"></orov-topdowncompass>
+			<mobile-compass id="compass" event-emitter="{{eventEmitter}}"></mobile-compass>
 
 			<div id="depth">{{depth}}m</div>
 			<div id="voltage">{{battery}}V</div>
