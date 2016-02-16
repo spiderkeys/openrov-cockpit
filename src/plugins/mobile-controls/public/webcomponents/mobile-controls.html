@@ -24,8 +24,7 @@
 	</style>
 
 	<template>
-		<dual-thumbstick id="dualthumbstick">
-			<content></content>
+		<dual-thumbstick id="dualthumbstick" event-emitter="{{eventEmitter}}">
 		</dual-thumbstick>
 	</template>
 	
@@ -61,7 +60,6 @@
 					if( this.eventEmitter !== undefined )
 					{
 						this.eventEmitter.emit( 'plugin.rovpilot.setThrottle', e.detail.val );
-						console.log( "throttle: " +  e.detail.val );
 					}
 				},
 				
@@ -70,7 +68,6 @@
         			if( this.eventEmitter !== undefined )
 					{
 						this.eventEmitter.emit( 'plugin.rovpilot.setYaw', e.detail.val );
-						console.log( "yaw: " +  e.detail.val );
 					}
 				},
 				
@@ -79,7 +76,6 @@
         			if( this.eventEmitter !== undefined )
 					{
 						this.eventEmitter.emit( 'plugin.rovpilot.setLift', e.detail.val );
-						console.log( "vertical: " +  e.detail.val );
 					}
 				}
 			} );
