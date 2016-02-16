@@ -238,7 +238,9 @@
       callback(state);
     });
 
-    this.rov.on('plugin.rovpilot.controls', function(controls){
+	// Control status of rov
+    this.rov.on('plugin.rovpilot.controls', function(controls)
+    {
       self.cockpit.emit('plugin.rovpilot.controls', controls);
     });
 
@@ -299,18 +301,24 @@
     controls.pitch = positions.pitch;
     controls.roll = positions.roll;
     controls.strafe = positions.strafe;
-    for (var i in positions) {
-      if (controls[i] != this.priorControls[i]) {
+    
+    for (var i in positions) 
+    {
+      if (controls[i] != this.priorControls[i]) 
+      {
         updateRequired = true;
         break;
       }
     }
-    if (this.sendUpdateEnabled && updateRequired || this.sendToROVEnabled === false) {
-      if (this.sendToROVEnabled) {
+    if (this.sendUpdateEnabled && updateRequired || this.sendToROVEnabled === false) 
+    {
+      if (this.sendToROVEnabled) 
+      {
         this.ack = performance.now();
-        this.rov.emit('plugin.rovpilot.desiredControlRates',controls,this.ack,function(ack){
+        this.rov.emit('plugin.rovpilot.desiredControlRates',controls,this.ack,function(ack)
+        {
           if (ack===self.ack) {self.ack = null;}
-        });
+        } );
       }
       this.priorControls = controls;
     }
