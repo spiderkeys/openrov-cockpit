@@ -13,36 +13,42 @@ var oldpath = '';
 if (process.env['NODE_PATH']!==undefined){
   oldpath = process.env['NODE_PATH'];
 }
- //just in case already been set leave it alone
-  process.env['NODE_PATH']=__dirname+'/lib:'+oldpath;
-  require('module').Module._initPaths();
-  console.log("Set NODE_PATH to: "+process.env['NODE_PATH'] );
+
+//just in case already been set leave it alone
+process.env['NODE_PATH']=__dirname+'/lib:'+oldpath;
+require('module').Module._initPaths();
+console.log("Set NODE_PATH to: "+process.env['NODE_PATH'] );
 
 
-var CONFIG = require('./lib/config');
-var fs = require('fs');
-var express = require('express');
-var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server, { log: false, origins: '*:*' });
-var EventEmitter = require('events').EventEmitter;
-var OpenROVController = require(CONFIG.OpenROVController);
-var logger = require('./lib/logger').create(CONFIG);
-var mkdirp = require('mkdirp');
-var path = require('path');
-var PluginLoader = require('./lib/PluginLoader');
-var CockpitMessaging = require('./lib/CockpitMessaging');
-var Q=require('q');
+var CONFIG 				= require('./lib/config');
+
+var fs 					= require('fs');
+var express 			= require('express');
+var app 				= express();
+var server 				= require('http').createServer(app);
+var io 					= require('socket.io').listen(server, { log: false, origins: '*:*' });
+var EventEmitter 		= require('events').EventEmitter;
+
+var mkdirp 				= require('mkdirp');
+var path 				= require('path');
+var Q 					= require('q');
 require('systemd');
 
-var serveIndex = require('serve-index');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var methodOverride = require('method-override');
-var session = require('express-session');
-var bodyParser = require('body-parser');
-var multer = require('multer');
-var errorHandler = require('errorhandler');
+// Openrov libs
+var logger 				= require('./lib/logger').create(CONFIG);
+var OpenROVController 	= require(CONFIG.OpenROVController);
+var PluginLoader	 	= require('./lib/PluginLoader');
+var CockpitMessaging 	= require('./lib/CockpitMessaging');
+
+var serveIndex 			= require('serve-index');
+var favicon 			= require('serve-favicon');
+var logger 				= require('morgan');
+var methodOverride 		= require('method-override');
+var session 			= require('express-session');
+var bodyParser 			= require('body-parser');
+var multer 				= require('multer');
+var errorHandler 		= require('errorhandler');
+
 app.use(express.static(__dirname + '/static/'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -61,6 +67,7 @@ app.use('/components', express.static(path.join(__dirname,'plugins/telemetry/pub
 app.use('/components/telemetry', express.static(path.join(__dirname,'plugins/telemetry/public/webcomponents')));
 app.use('/components/telemetry', serveIndex(path.join(__dirname,'plugins/telemetry/public/webcomponents')));
 console.log("!!!"+ path.join(__dirname, 'src/static/bower_components'));
+
 // Keep track of plugins js and css to load them in the view
 var scripts = [], styles = [];
 var sysscripts = [];
@@ -68,9 +75,12 @@ var sysscripts = [];
 // setup required directories
 mkdirp(CONFIG.preferences.get('photoDirectory'));
 process.env.NODE_ENV = true;
+
 var globalEventLoop = new EventEmitter();
 var DELAY = Math.round(1000 / CONFIG.video_frame_rate);
+
 io= require('./static/js/socketIOStoreAndForward.js')(io);
+
 var client = new CockpitMessaging(io);
 client = require('./static/js/eventEmitterStoreAndForward.js')(client);
 var controller = new OpenROVController(globalEventLoop, client);

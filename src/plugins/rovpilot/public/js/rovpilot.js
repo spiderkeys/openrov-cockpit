@@ -240,11 +240,12 @@
       callback(state);
     });
 
+	// FLIPPED
     this.rov.on('plugin.rovpilot.controls', function(controls){
       self.cockpit.emit('plugin.rovpilot.controls', controls);
     });
 
-
+	// FLIPPED
     this.rov.on('plugin.rovpilot.setPowerLevel', function(level){
       self.cockpit.emit('plugin.rovpilot.setPowerLevel',level);
     });

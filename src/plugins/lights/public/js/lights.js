@@ -1,17 +1,22 @@
-(function(window) {
+(function(window) 
+{
   'use strict';
+  
   var plugins = namespace('plugins');
-  plugins.Lights = function(cockpit) {
+  
+  plugins.Lights = function(cockpit) 
+  {
     var self = this;
     self.cockpit = cockpit;
-
   };
 
-  plugins.Lights.prototype.getTelemetryDefintions = function getTelemetryDefintions() {
+  plugins.Lights.prototype.getTelemetryDefintions = function getTelemetryDefintions() 
+  {
     return([{name: 'LIGP', description: 'Internal lights percent of power'}]);
   }
 
-  plugins.Lights.prototype.inputDefaults = function inputDefaults() {
+  plugins.Lights.prototype.inputDefaults = function inputDefaults()
+  {
     return [
       // lights increment
       {
@@ -49,14 +54,17 @@
 
   //This pattern will hook events in the cockpit and pull them all back
   //so that the reference to this instance is available for further processing
-  plugins.Lights.prototype.listen = function listen() {
+  plugins.Lights.prototype.listen = function listen() 
+  {
     var self = this;
 
-    self.cockpit.rov.withHistory.on('plugin.lights.state', function(state) {
+    self.cockpit.rov.withHistory.on('plugin.lights.state', function(state) 
+	{
       self.cockpit.emit('plugin.lights.state',state);
     });
 
-    self.cockpit.on('plugin.lights.set',function(value){
+    self.cockpit.on('plugin.lights.set',function(value)
+	{
         cockpit.rov.emit('plugin.lights.set',value);
     });
 
